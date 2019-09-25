@@ -8,6 +8,9 @@ from .models import *
 from rest_framework.decorators import api_view
 import json
 
+from rest_framework import serializers, viewsets
+
+
 # instantiate pusher
 # pusher = Pusher(app_id=config('PUSHER_APP_ID'), key=config('PUSHER_KEY'), secret=config('PUSHER_SECRET'), cluster=config('PUSHER_CLUSTER'))
 
@@ -65,3 +68,20 @@ def move(request):
 def say(request):
     # IMPLEMENT
     return JsonResponse({'error':"Not yet implemented"}, safe=True, status=500)
+
+class RoomSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = Room
+        fields = ('title', 'description', 'n_to', 's_to', 'e_to', 'w_to')
+
+class RoomViewSet(viewsets.ModelViewSet):
+    serializer_class = RoomSerializer
+    queryset = Room.objects.all()
+
+# @api_view(["GET"])
+# def rooms(request):
+    
+#     all_rooms = Room.objects.all()
+#     serializer = RoomSerializer(all_rooms, many=True)
+#     return Response(serializer.data)
