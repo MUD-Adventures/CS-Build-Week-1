@@ -10,6 +10,8 @@ from .models import Room, Player
 
 # admin.site.register(Player)
 
+class RoomAdmin(admin.ModelAdmin):
+    readonly_fields = ('id',)
 
-admin.site.register(Room)
+admin.site.register(Room, RoomAdmin)
 admin.site.register(Player)
